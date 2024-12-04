@@ -1,0 +1,87 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{amsmath}
+
+\title{CSE498/559 Report: Neural Network Experiment Results}
+\author{
+Keb Summers (\texttt{kesummer@asu.edu})\\
+Edward Ying (\texttt{yying14@asu.edu})\\
+Nicolas Burton (\texttt{nburton8@asu.edu})\\
+Imaad Farooqui (\texttt{iafarooq@asu.edu})\\
+Muhammed Hunaid Topiwala (\texttt{mtopiwal@asu.edu})\\
+\vspace{1em}
+Arizona State University
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+In our experiment, we compared several activation functions in a convolutional neural network (CNN) structure. For instance, we observed that the Swish activation function performed better than ReLU and Sigmoid, likely due to its complexity and ability to avoid dead neurons.
+
+\section*{Methods}
+Briefly describe your experimental setup:
+\begin{itemize}
+    \item \textbf{Dataset}: Mention the dataset used and preprocessing steps.
+    \item \textbf{Model Architecture}: Describe the CNN structure or other models tested.
+    \item \textbf{Evaluation Metrics}: Define the metrics used to evaluate performance (e.g., accuracy, F1-score).
+\end{itemize}
+
+\section*{Results}
+\subsection*{Metrics Table}
+Below is the table summarizing the performance of the tested models:
+
+\begin{table}[h!]
+\centering
+\caption{Performance Metrics for Tested Models}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Model} & \textbf{Activation Function} & \textbf{Accuracy (\%)} & \textbf{F1-Score} \\ 
+\midrule
+Model 1        & ReLU                         & 85.2                  & 0.88              \\ 
+Model 2        & Sigmoid                      & 82.3                  & 0.85              \\ 
+Model 3        & Swish                        & 90.4                  & 0.91              \\ 
+\bottomrule
+\end{tabular}
+\label{tab:metrics}
+\end{table}
+
+If the table is too large, you may refer to the detailed results in this Google Sheets document: \url{https://docs.google.com/spreadsheets/d/your_link_here}
+
+\subsection*{Best Performing Hyperparameters}
+Describe the best hyperparameters for each model. For example:
+\begin{itemize}
+    \item Model 1 (ReLU): Learning rate = 0.001, Batch size = 32.
+    \item Model 3 (Swish): Learning rate = 0.0005, Batch size = 64.
+\end{itemize}
+
+\section*{Discussion}
+Explain your observations and hypotheses:
+\begin{itemize}
+    \item Why did some activation functions outperform others?
+    \item How do the hyperparameters impact the results?
+    \item Any challenges faced during experimentation.
+\end{itemize}
+
+\section*{Conclusion}
+Summarize your findings and suggest potential future work:
+\begin{itemize}
+    \item Key takeaway: Swish outperforms ReLU and Sigmoid due to better gradient flow and avoiding dead neurons.
+    \item Future work: Test additional activation functions (e.g., GELU) or other architectures.
+\end{itemize}
+
+\section*{Team Members}
+\begin{itemize}
+    \item Keb Summers (\texttt{kesummer@asu.edu}), Graduate
+    \item Edward Ying (\texttt{yying14@asu.edu}), Graduate
+    \item Nicolas Burton (\texttt{nburton8@asu.edu}), Graduate
+    \item Imaad Farooqui (\texttt{iafarooq@asu.edu}), Undergraduate
+    \item Muhammed Hunaid Topiwala (\texttt{mtopiwal@asu.edu}), Undergraduate
+\end{itemize}
+
+\end{document}
