@@ -1,0 +1,11 @@
+TRAIN:
+
+python main.py --infile ./catelmo/pickles/<WHATEVER .PKL FOR TRAINING i.e. train_subset.pkl> --batch_size 32 --epoch 50 --lr 0.001 --model_name <WHATEVER NAME FOR MODEL>.ckpt --cuda True --heads 8 --drop_rate 0.25
+
+TEST:
+
+python main.py --indepfile ./catelmo/pickles/<WHATEVER .PKL FOR TESTING i.e. test_subset.pkl> --batch_size 32 --model_name <USE EXISITNG TRAINED MODEL> --cuda True --mode test
+
+NOTES:
+
+When training/testing, ensure LOTS of available memory. The .pkl files are loaded into memory all at once and are VERY large. I recommend MINIMUM 32Gib of RAM to run the code. Otherwise process will be killed.
