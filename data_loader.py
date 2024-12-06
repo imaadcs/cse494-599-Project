@@ -463,6 +463,9 @@ class Field_modified(RawField):
 def load_precomputed_embeddings(filepath):
     """Load precomputed embeddings from a .pkl file."""
     data = pd.read_pickle(filepath)
+    
+    print(f"Serialized pickle file located at {filepath} has been read and is approximately {os.path.getsize(filepath) / 1e9:.2f} GB")
+    
     return (
         torch.tensor(data["epi_embeds"].tolist(), dtype=torch.float32),
         torch.tensor(data["tcr_embeds"].tolist(), dtype=torch.float32),

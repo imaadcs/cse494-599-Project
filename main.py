@@ -80,6 +80,11 @@ def main():
     if args.cuda:
         torch.cuda.manual_seed(args.seed)
 
+    if "models" not in os.listdir('.'):
+        os.mkdir("models")
+    if "result" not in os.listdir('.'):
+        os.mkdir("result")
+
     # Training mode
     if args.mode == 'train':
         assert args.infile is not None, "Training mode requires --infile"
@@ -90,6 +95,8 @@ def main():
         from attention import Net
         model = Net(args).to(device)
         optimizer = optim.Adam(model.parameters(), lr=args.lr)
+
+        print(f"Training model for {args.epoch} epoches")
 
         # Train model
         t0 = time.time()
@@ -120,6 +127,8 @@ def main():
         # Load independent test data
         x_test_pep, x_test_tcr, y_test = load_precomputed_embeddings(args.indepfile)
         test_loader = define_dataloader(x_test_pep, x_test_tcr, y_test, batch_size=args.batch_size, device=device)
+
+        print(f"Testing model based on testing data")
 
         # Evaluate and save predictions and performance
         # Evaluate and save predictions
