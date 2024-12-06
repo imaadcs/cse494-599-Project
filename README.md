@@ -4,6 +4,28 @@
 
 ATM-TCR demonstrates how a multi-head self-attention based model can be utilized to learn structural information from protein sequences to make binding affinity predictions.
 
+## Class Project: Model Variants and Results
+
+For this project, we trained ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory, and the results are available in the `result/` directory.
+
+Below is a summary of the performance metrics and hyperparameters for each model from the independent test set (INDEP):
+
+---
+
+| Split  | Model Name    | Epoch | Learning Rate | Batch Size | Drop Rate | Accuracy | AUC   | F1 Macro | F1 Micro | Loss       | Precision0 | Precision1 | Recall0 | Recall1 |
+|--------|---------------|-------|---------------|------------|-----------|----------|-------|----------|----------|------------|------------|------------|---------|---------|
+| TCR    | TCRTest1      | 200   | 0.01          | 32         | 0.25      | 0.7070   | 0.7798| 0.7069   | 0.7070   | 35998.6892 | 0.7034     | 0.7107     | 0.7179  | 0.6959  |
+| TCR    | TCRTest2      | 250   | 0.005         | 32         | 0.25      | 0.6757   | 0.8047| 0.6641   | 0.6757   | 39511.7933 | 0.7825     | 0.6270     | 0.4887  | 0.8636  |
+| TCR    | TCRTest3      | 300   | 0.001         | 32         | 0.25      | 0.6133   | 0.7950| 0.5697   | 0.6133   | 227517.0810| 0.8171     | 0.5684     | 0.2942  | 0.9338  |
+| TCR    | TCRTest4      | 100   | 0.00005       | 32         | 0.25      | 0.7267   | 0.8141| 0.7265   | 0.7267   | 34577.3718 | 0.7416     | 0.7134     | 0.6977  | 0.7558  |
+| EPI    | EPITest1      | 200   | 0.01          | 32         | 0.25      | 0.6384   | 0.7011| 0.6384   | 0.6384   | 59885.4547 | 0.6407     | 0.6362     | 0.6303  | 0.6465  |
+| EPI    | EPITest2      | 250   | 0.005         | 32         | 0.25      | 0.6016   | 0.7107| 0.5847   | 0.6016   | 94645.5976 | 0.6701     | 0.5724     | 0.4002  | 0.8030  |
+| EPI    | EPITest3      | 300   | 0.001         | 32         | 0.25      | 0.5328   | 0.7033| 0.4282   | 0.5328   | 866328.8033| 0.7276     | 0.5177     | 0.1050  | 0.9607  |
+| EPI    | EPITest4      | 100   | 0.00005       | 32         | 0.25      | 0.6553   | 0.7222| 0.6552   | 0.6553   | 82424.4179 | 0.6502     | 0.6607     | 0.6722  | 0.6384  |
+
+---
+
+
 ## Publication
 <b>ATM-TCR: TCR-Epitope Binding Affinity Prediction Using a Multi-Head Self-Attention Model</b> <br/>
 [Michael Cai](https://github.com/cai-michael)<sup>1,2</sup>, [Seojin Bang](https://github.com/SeojinBang)<sup>2</sup>, [Pengfei Zhang](https://github.com/pzhang84)<sup>1,2</sup>, [Heewook Lee](https://scai.engineering.asu.edu/faculty/computer-science-and-engineering/heewook-lee/)<sup>1,2</sup><br/>
