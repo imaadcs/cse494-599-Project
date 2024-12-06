@@ -8,6 +8,9 @@ ATM-TCR demonstrates how a multi-head self-attention based model can be utilized
 
 For this project, we trained ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory, and the results are available in the `result/` directory.
 
+You can also download the trained models directly from the release section of this repository:  
+[**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR
+
 Below is a summary of the performance metrics and hyperparameters for each model from the independent test set (INDEP):
 
 ---
