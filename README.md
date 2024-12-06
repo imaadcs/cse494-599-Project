@@ -4,6 +4,26 @@
 
 ATM-TCR demonstrates how a multi-head self-attention based model can be utilized to learn structural information from protein sequences to make binding affinity predictions.
 
+## Class Project: Model Variants and Results
+
+For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory, and the results are available in the `result/` directory.
+
+The major modification we did was use context-aware embeddings through catELMO.
+
+You can also download the trained models directly from the release section of this repository:  
+[**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR)
+
+Below is a summary of the performance metrics and hyperparameters for each model from the independent test set (INDEP):
+
+---
+
+| Split  | Model Name    | Epoch | Learning Rate | Batch Size | Drop Rate | Accuracy | AUC   | F1 Macro | F1 Micro | Loss       | Precision0 | Precision1 | Recall0 | Recall1 |
+|--------|---------------|-------|---------------|------------|-----------|----------|-------|----------|----------|------------|------------|------------|---------|---------|
+
+
+---
+
+
 ## Publication
 <b>ATM-TCR: TCR-Epitope Binding Affinity Prediction Using a Multi-Head Self-Attention Model</b> <br/>
 [Michael Cai](https://github.com/cai-michael)<sup>1,2</sup>, [Seojin Bang](https://github.com/SeojinBang)<sup>2</sup>, [Pengfei Zhang](https://github.com/pzhang84)<sup>1,2</sup>, [Heewook Lee](https://scai.engineering.asu.edu/faculty/computer-science-and-engineering/heewook-lee/)<sup>1,2</sup><br/>
