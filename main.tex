@@ -1,87 +1,98 @@
-\documentclass[11pt]{article}
-\usepackage[a4paper,margin=1in]{geometry}
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{hyperref}
+\usepackage{array}
+\usepackage{longtable}
 \usepackage{caption}
-\usepackage{amsmath}
 
-\title{CSE498/559 Report: Neural Network Experiment Results}
+\captionsetup{font=small}
+
+\title{Exploring Binding Affinity Prediction with ATM-TCR and TEPCAM Models}
 \author{
-Keb Summers (\texttt{kesummer@asu.edu})\\
-Edward Ying (\texttt{yying14@asu.edu})\\
-Nicolas Burton (\texttt{nburton8@asu.edu})\\
-Imaad Farooqui (\texttt{iafarooq@asu.edu})\\
-Muhammed Hunaid Topiwala (\texttt{mtopiwal@asu.edu})\\
-\vspace{1em}
-Arizona State University
+    Keb Summers \\ 
+    Edward Ying \\ 
+    Nicolas Burton \\ 
+    Imaad Farooqui \\ 
+    Muhammed Hunaid Topiwala
 }
-\date{\today}
-
+\date{}
 \begin{document}
+
 \maketitle
 
-\section*{Introduction}
-In our experiment, we compared several activation functions in a convolutional neural network (CNN) structure. For instance, we observed that the Swish activation function performed better than ReLU and Sigmoid, likely due to its complexity and ability to avoid dead neurons.
+\section{Introduction}
+In this project, we explored the binding affinity prediction task using four models: \textbf{ATM-TCR}, \textbf{TEPCAM}, and major modifications of each. These models were trained and evaluated on two dataset splits, \textbf{TCR} and \textbf{EPI}, with varying hyperparameters.
 
-\section*{Methods}
-Briefly describe your experimental setup:
+\bigskip
+
+ATM-TCR employs \textbf{BLOSUM embeddings} and a multi-head self-attention mechanism to extract structural information from protein sequences. We further modified ATM-TCR to integrate \textbf{context-aware embeddings} using the catELMO model, which provides enhanced contextual sequence representation.
+
+\bigskip
+
+TEPCAM, another binding affinity prediction model, was explored in its standard form and modified by incorporating \textbf{geometric loss}, which emphasizes distance-based regularization to improve generalization.
+
+\bigskip
+
+The goal of this study was to evaluate these models under different configurations, identify the best-performing hyperparameters, and analyze the reasons behind the observed results. This report summarizes our experiments and findings.
+
+
+\section{Results}
+The performance metrics for ATM-TCR and its modified version on the TCR and EPI splits are presented in the following tables.
+
+\subsection{ATM-TCR Results}
+\begin{longtable}{|l|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Split} & \textbf{Model} & \textbf{Epoch} & \textbf{LR} & \textbf{Batch} & \textbf{Drop} & \textbf{Acc} & \textbf{AUC} & \textbf{F1Macro} \\ \hline
+TCR & TCRTest1 & 200 & 0.01 & 32 & 0.25 & 0.7070 & 0.7798 & 0.7069 \\ \hline
+TCR & TCRTest2 & 250 & 0.005 & 32 & 0.25 & 0.6757 & 0.8047 & 0.6641 \\ \hline
+TCR & TCRTest3 & 300 & 0.001 & 32 & 0.25 & 0.6133 & 0.7950 & 0.5697 \\ \hline
+TCR & TCRTest4 & 100 & 0.00005 & 32 & 0.25 & 0.7267 & 0.8141 & 0.7265 \\ \hline
+EPI & EPITest1 & 200 & 0.01 & 32 & 0.25 & 0.6384 & 0.7011 & 0.6384 \\ \hline
+EPI & EPITest2 & 250 & 0.005 & 32 & 0.25 & 0.6016 & 0.7107 & 0.5847 \\ \hline
+EPI & EPITest3 & 300 & 0.001 & 32 & 0.25 & 0.5328 & 0.7033 & 0.4282 \\ \hline
+EPI & EPITest4 & 100 & 0.00005 & 32 & 0.25 & 0.6553 & 0.7222 & 0.6552 \\ \hline
+\caption{ATM-TCR Results on TCR and EPI Splits}
+\label{table:atm-tcr}
+\end{longtable}
+
+\subsection{ATM-TCR Modified Results}
+\begin{longtable}{|l|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Split} & \textbf{Model} & \textbf{Epoch} & \textbf{LR} & \textbf{Batch} & \textbf{Drop} & \textbf{Acc} & \textbf{AUC} & \textbf{F1Macro} \\ \hline
+EPI & EPITest1 & 100 & 0.00005 & 32 & 0.25 & 0.8335 & 0.9373 & 0.8310 \\ \hline
+EPI & EPITest2 & 150 & 0.00005 & 32 & 0.25 & 0.8453 & 0.9289 & 0.8445 \\ \hline
+EPI & EPITest3 & 200 & 0.00005 & 32 & 0.25 & 0.8459 & 0.9247 & 0.8456 \\ \hline
+EPI & EPITest4 & 150 & 0.00001 & 64 & 0.30 & 0.8067 & 0.9387 & 0.8011 \\ \hline
+\caption{ATM-TCR Modified Results on EPI Split}
+\label{table:atm-tcr-modified}
+\end{longtable}
+
+\subsection{TEPCAM and TEPCAM Modified Results}
+Results for TEPCAM and its variant are placeholders as the experiments are ongoing.
+
+\section{Best-Performing Hyperparameters}
+The best-performing hyperparameters for each split and model are summarized below:
 \begin{itemize}
-    \item \textbf{Dataset}: Mention the dataset used and preprocessing steps.
-    \item \textbf{Model Architecture}: Describe the CNN structure or other models tested.
-    \item \textbf{Evaluation Metrics}: Define the metrics used to evaluate performance (e.g., accuracy, F1-score).
+    \item \textbf{TCR Split (ATM-TCR):} Epoch = 100, Learning Rate = 0.00005, Dropout = 0.25, Accuracy = 0.7267.
+    \item \textbf{EPI Split (ATM-TCR Modified):} Epoch = 200, Learning Rate = 0.00005, Dropout = 0.25, Accuracy = 0.8459.
 \end{itemize}
 
-\section*{Results}
-\subsection*{Metrics Table}
-Below is the table summarizing the performance of the tested models:
-
-\begin{table}[h!]
-\centering
-\caption{Performance Metrics for Tested Models}
-\begin{tabular}{@{}lccc@{}}
-\toprule
-\textbf{Model} & \textbf{Activation Function} & \textbf{Accuracy (\%)} & \textbf{F1-Score} \\ 
-\midrule
-Model 1        & ReLU                         & 85.2                  & 0.88              \\ 
-Model 2        & Sigmoid                      & 82.3                  & 0.85              \\ 
-Model 3        & Swish                        & 90.4                  & 0.91              \\ 
-\bottomrule
-\end{tabular}
-\label{tab:metrics}
-\end{table}
-
-If the table is too large, you may refer to the detailed results in this Google Sheets document: \url{https://docs.google.com/spreadsheets/d/your_link_here}
-
-\subsection*{Best Performing Hyperparameters}
-Describe the best hyperparameters for each model. For example:
+\section{Discussion}
+\textbf{Observations:}
 \begin{itemize}
-    \item Model 1 (ReLU): Learning rate = 0.001, Batch size = 32.
-    \item Model 3 (Swish): Learning rate = 0.0005, Batch size = 64.
+    \item ATM-TCR's use of BLOSUM embeddings enabled it to perform well on the TCR split but struggled with the EPI split due to dataset complexity.
+    \item Context-aware embeddings in the modified ATM-TCR improved performance on EPI, suggesting that additional context is crucial for understanding these sequences.
+    \item Hyperparameter tuning, particularly learning rate and dropout, significantly affected model performance.
 \end{itemize}
 
-\section*{Discussion}
-Explain your observations and hypotheses:
-\begin{itemize}
-    \item Why did some activation functions outperform others?
-    \item How do the hyperparameters impact the results?
-    \item Any challenges faced during experimentation.
-\end{itemize}
+\textbf{Insights:}
+- The EPI dataset's complexity may require embeddings that capture nuanced sequence relationships, which explains why catELMO embeddings were more effective.
+- Overfitting was mitigated in the modified models by using a smaller learning rate and dropout regularization.
 
-\section*{Conclusion}
-Summarize your findings and suggest potential future work:
-\begin{itemize}
-    \item Key takeaway: Swish outperforms ReLU and Sigmoid due to better gradient flow and avoiding dead neurons.
-    \item Future work: Test additional activation functions (e.g., GELU) or other architectures.
-\end{itemize}
-
-\section*{Team Members}
-\begin{itemize}
-    \item Keb Summers (\texttt{kesummer@asu.edu}), Graduate
-    \item Edward Ying (\texttt{yying14@asu.edu}), Graduate
-    \item Nicolas Burton (\texttt{nburton8@asu.edu}), Graduate
-    \item Imaad Farooqui (\texttt{iafarooq@asu.edu}), Undergraduate
-    \item Muhammed Hunaid Topiwala (\texttt{mtopiwal@asu.edu}), Undergraduate
-\end{itemize}
+\section{Conclusion}
+This project demonstrated the utility of embedding strategies and loss functions for enhancing binding affinity prediction models. Future work could include extending these modifications to larger datasets and exploring other embedding techniques.
 
 \end{document}
