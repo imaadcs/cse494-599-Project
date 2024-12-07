@@ -89,6 +89,15 @@ def main():
     if args.mode == 'train':
         assert args.infile is not None, "Training mode requires --infile"
         x_pep, x_tcr, y = load_precomputed_embeddings(args.infile)
+        
+        #print("x_pep shape:", x_pep.shape)
+        #print("x_tcr shape:", x_tcr.shape)
+        #print("y shape:", y.shape)
+
+        #print("First few peptide embeddings:", x_pep[:5])
+        #print("First few TCR embeddings:", x_tcr[:5])
+        #print("First few binding values:", y[:50])
+
         train_loader = define_dataloader(x_pep, x_tcr, y, batch_size=args.batch_size, device=device)
 
         # Initialize model

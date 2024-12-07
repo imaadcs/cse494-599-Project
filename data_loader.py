@@ -8,6 +8,7 @@ from torchtext.data.utils import is_tokenizer_serializable, dtype_to_attr
 from itertools import chain
 from collections import Counter,OrderedDict
 import pandas as pd
+import pickle
 
 AMINO_MAP = {'<pad>':24, '*': 23, 'A': 0, 'C': 4, 'B': 20,
              'E': 6, 'D': 3, 'G': 7, 'F': 13, 'I': 9, 'H': 8,
@@ -462,8 +463,14 @@ class Field_modified(RawField):
     
 def load_precomputed_embeddings(filepath):
     """Load precomputed embeddings from a .pkl file."""
-    data = pd.read_pickle(filepath)
     
+    try:
+        data = pd.read_pickle(filepath)
+    except Exception as e:
+        print(f"Failed with exception: {e}")
+        with open(filepath, "rb") as f:
+            data = pickle.load(f)
+
     print(f"Serialized pickle file located at {filepath} has been read and is approximately {os.path.getsize(filepath) / 1e9:.2f} GB")
     
     return (
