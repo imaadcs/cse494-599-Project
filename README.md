@@ -6,20 +6,26 @@ ATM-TCR demonstrates how a multi-head self-attention based model can be utilized
 
 ## Class Project: Model Variants and Results
 
-For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory, and the results are available in the `result/` directory.
+For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory.
 
-The major modification we did was use context-aware embeddings through catELMO.
+The major modification we did here compared to the regular ATM-TCR model was use context-aware embeddings through the catELMO embedding model.
 
 You can also download the trained models directly from the release section of this repository:  
-[**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR)
+[**Download Trained Models TODO EDIT**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR)
 
 Below is a summary of the performance metrics and hyperparameters for each model from the independent test set (INDEP):
 
 ---
 
-| Split  | Model Name    | Epoch | Learning Rate | Batch Size | Drop Rate | Accuracy | AUC   | F1 Macro | F1 Micro | Loss       | Precision0 | Precision1 | Recall0 | Recall1 |
-|--------|---------------|-------|---------------|------------|-----------|----------|-------|----------|----------|------------|------------|------------|---------|---------|
-
+| Split | Model Name  | Epoch | Learning Rate | Batch Size | Drop Rate | Accuracy | AUC   | F1 Macro | F1 Micro | Loss       | Precision0 | Precision1 | Recall0 | Recall1 |
+|-------|-------------|-------|---------------|------------|-----------|----------|-------|----------|----------|------------|------------|------------|---------|---------|
+| EPI   | EPITest1    | 100   | 0.00005       | 32         | 0.25      | 0.8335   | 0.9373| 0.831    | 0.8335   | 47896.0302 | 0.7688     | 0.9391     | 0.9537  | 0.7132  |
+| EPI   | EPITest2    | 150   | 0.00005       | 32         | 0.25      | 0.8453   | 0.9289| 0.8445   | 0.8453   | 75092.6377 | 0.8014     | 0.9041     | 0.9181  | 0.7725  |
+| EPI   | EPITest3    | 200   | 0.00005       | 32         | 0.25      | 0.8459   | 0.9247| 0.8456   | 0.8459   | 132178.5278| 0.8168     | 0.881      | 0.8919  | 0.7999  |
+| EPI   | EPITest4    | 150   | 0.00001       | 64         | 0.3       | 0.8067   | 0.9387| 0.8011   | 0.8067   | 89171.7366 | 0.7296     | 0.9616     | 0.9745  | 0.6388  |
+| EPI   | EPITest5    | 150   | 0.0001        | 64         | 0.2       | 0.8289   | 0.9088| 0.8287   | 0.8289   | 180212.2307| 0.8469     | 0.8126     | 0.8029  | 0.8548  |
+| EPI   | EPITest6    | 175   | 0.00005       | 32         | 0.3       | 0.8025   | 0.9318| 0.7969   | 0.8025   | 84192.5049 | 0.727      | 0.9534     | 0.9689  | 0.6361  |
+| EPI   | EPITest7    | 175   | 0.00005       | 32         | 0.2       | 0.8472   | 0.9241| 0.8472   | 0.8472   | 147628.785 | 0.8418     | 0.8527     | 0.855   | 0.8394  |
 
 ---
 
