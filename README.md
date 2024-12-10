@@ -6,7 +6,7 @@ Prediction of T cell receptor-epitope binding specificity via interpretable deep
 For this project, we trained TEPCAM on **TCR** and **EPI** splits using different variants of hyperparameters. The trained models can be found in the `model/` directory, and the results are available in `project_metric_file.csv` and `pics/` directories.
 
 You can also download the trained models directly from the release section of this repository:  
-[**Download Trained Models**](#)
+[**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-TEPCAM)
 
 Below is a summary of the performance metrics and hyperparameters for each model from the independent test set:
 
