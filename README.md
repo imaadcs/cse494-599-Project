@@ -1,3 +1,7 @@
+# Main Branch
+
+This main branch contains the raw latex file for our machine learning report, titled `MachineLearningReport.tex`, and also contains the results of our best models on the TCR and EPI splits of the competition datasets in `competition-results/`. We ran the competition dataset on the modified variant of ATM-TCR which can be seen in the `Modified-ATM-TCR` branch, specifically the trained models `EPITest7` and `TCRTest3` which can be downloaded from the release section of this repository.
+
 # Binding Affinity Prediction Models
 
 This repository contains the code and resources for four different models used in our experiments on binding affinity prediction:
