@@ -6,12 +6,12 @@ ATM-TCR demonstrates how a multi-head self-attention based model can be utilized
 
 ## Class Project: Model Variants and Results
 
-For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory.
+For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the release and their raw performance stats can be seen in the `results/` folder.
 
 The major modification we did here compared to the regular ATM-TCR model was use context-aware embeddings through the catELMO embedding model.
 
-You can also download the trained models directly from the release section of this repository:  
-[**Download Trained Models TODO EDIT**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR)
+You can download the trained models directly from the release section of this repository:  
+[**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-Modified-ATM-TCR)
 
 Below is a summary of the performance metrics and hyperparameters for each model from the independent test set (INDEP):
 
@@ -26,9 +26,18 @@ Below is a summary of the performance metrics and hyperparameters for each model
 | EPI   | EPITest5    | 150   | 0.0001        | 64         | 0.2       | 0.8289   | 0.9088| 0.8287   | 0.8289   | 180212.2307| 0.8469     | 0.8126     | 0.8029  | 0.8548  |
 | EPI   | EPITest6    | 175   | 0.00005       | 32         | 0.3       | 0.8025   | 0.9318| 0.7969   | 0.8025   | 84192.5049 | 0.727      | 0.9534     | 0.9689  | 0.6361  |
 | EPI   | EPITest7    | 175   | 0.00005       | 32         | 0.2       | 0.8472   | 0.9241| 0.8472   | 0.8472   | 147628.785 | 0.8418     | 0.8527     | 0.855   | 0.8394  |
+| TCR   | TCRTest1    | 150   | 0.00005       | 32         | 0.25      | 0.8561   | 0.954 | 0.8543   | 0.8561   | 34807.2945 | 0.7934     | 0.9535     | 0.9637  | 0.748   |
+| TCR   | TCRTest2    | 200   | 0.00005       | 32         | 0.25      | 0.8684   | 0.9547| 0.8675   | 0.8684   | 37458.4415 | 0.8181     | 0.938      | 0.9481  | 0.7883  |
+| TCR   | TCRTest3    | 175   | 0.00005       | 32         | 0.2       | 0.8785   | 0.9517| 0.8782   | 0.8785   | 42981.433  | 0.8473     | 0.916      | 0.9239  | 0.8328  |
 
 ---
 
+## Usage on SOL
+`module load mamba/latest`
+`mamba create --name modified_atm_tcr python=3.8.10`
+`cd /path/to/repo`
+`pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html`
+`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/pickle --indepfile /path/to/test/pickle --save_model True --cuda True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --lr=0.00005 --batch_size=32 --drop_rate=0.2`
 
 ## Publication
 <b>ATM-TCR: TCR-Epitope Binding Affinity Prediction Using a Multi-Head Self-Attention Model</b> <br/>
