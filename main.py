@@ -64,11 +64,12 @@ def blindtest(model, device, test_loader, output_file):
             for batch_idx, (x_pep, x_tcr) in enumerate(test_loader):
                 x_pep, x_tcr = x_pep.to(device), x_tcr.to(device)
                 yhat = model(x_pep, x_tcr).squeeze(-1)
-                preds = (yhat > 0.5).cpu().numpy()  # Threshold for binding
+                #preds = (yhat > 0.5).cpu().numpy()  # Threshold for binding
+                prons = yhat.cpu().numpy()
 
                 # Write predictions
-                for idx, pred in enumerate(preds):
-                    writer.writerow([batch_idx * len(preds) + idx, "Binds" if pred else "Does Not Bind"])
+                for idx, prob in enumerate(probs):
+                    writer.writerow([batch_idx * len(probs) + idx, prob])
 
     print(f"Blind test predictions saved to {output_file}")
 
