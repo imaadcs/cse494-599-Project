@@ -65,7 +65,7 @@ def blindtest(model, device, test_loader, output_file):
                 x_pep, x_tcr = x_pep.to(device), x_tcr.to(device)
                 yhat = model(x_pep, x_tcr).squeeze(-1)
                 #preds = (yhat > 0.5).cpu().numpy()  # Threshold for binding
-                prons = yhat.cpu().numpy()
+                probs = yhat.cpu().numpy()
 
                 # Write predictions
                 for idx, prob in enumerate(probs):
