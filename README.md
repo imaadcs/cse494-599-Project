@@ -33,11 +33,11 @@ Below is a summary of the performance metrics and hyperparameters for each model
 ---
 
 ## Usage on SOL
-`module load mamba/latest`
-`mamba create --name modified_atm_tcr python=3.8.10`
-`cd /path/to/repo`
-`pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html`
-`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/pickle --indepfile /path/to/test/pickle --save_model True --cuda True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --lr=0.00005 --batch_size=32 --drop_rate=0.2`
+`module load mamba/latest`  
+`mamba create --name modified_atm_tcr python=3.8.10`  
+`cd /path/to/repo`  
+`pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html`  
+`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/pickle --indepfile /path/to/test/pickle --save_model True --cuda True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --lr=0.00005 --batch_size=32 --drop_rate=0.2`  
 
 ## Publication
 <b>ATM-TCR: TCR-Epitope Binding Affinity Prediction Using a Multi-Head Self-Attention Model</b> <br/>
