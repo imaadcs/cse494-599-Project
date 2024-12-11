@@ -6,7 +6,7 @@ ATM-TCR demonstrates how a multi-head self-attention based model can be utilized
 
 ## Class Project: Model Variants and Results
 
-For this project, we trained ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the `models/` directory, and the results are available in the `result/` directory.
+For this project, we trained ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the release and their raw performance stats can be seen in the `results/` folder or in the table below.
 
 You can also download the trained models directly from the release section of this repository:  
 [**Download Trained Models**](https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR)
@@ -27,6 +27,13 @@ Below is a summary of the performance metrics and hyperparameters for each model
 | EPI    | EPITest4      | 100   | 0.00005       | 32         | 0.25      | 0.6553   | 0.7222| 0.6552   | 0.6553   | 82424.4179 | 0.6502     | 0.6607     | 0.6722  | 0.6384  |
 
 ---
+
+## Usage on SOL
+`module load mamba/latest`  
+`mamba create --name atm_tcr python=3.8.10`  
+`cd /path/to/repo`  
+`pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html`  
+`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/csv --indepfile /path/to/test/csv --save_model True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --early_stop=False --lr=0.001 --batch_size=32 --drop_rate=0.25`  
 
 
 ## Publication
