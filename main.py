@@ -8,8 +8,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
-from data_loader import define_dataloader, load_precomputed_embeddings
+from data_loader import define_dataloader, load_precomputed_embeddings, load_precomputed_embeddings_blind
 from utils import str2bool, timeSince, get_performance_batchiter, print_performance, write_blackbox_output_batchiter
+import pickle
 
 # Constants
 PRINT_EVERY_EPOCH = 1
@@ -46,6 +47,32 @@ def test(model, device, test_loader, output_file):
     
     return performance
 
+def blindtest(model, device, test_loader, output_file):
+    """
+    Perform a blind test on data without known results.
+    Save predictions to a file indicating binding or not binding.
+    """
+    model.eval()
+    print("Performing blind test...")
+
+    # Open file for predictions
+    with open(output_file, 'w', newline='') as wf:
+        writer = csv.writer(wf)
+        writer.writerow(['Index', 'Binding'])
+
+        with torch.no_grad():
+            for batch_idx, (x_pep, x_tcr) in enumerate(test_loader):
+                x_pep, x_tcr = x_pep.to(device), x_tcr.to(device)
+                yhat = model(x_pep, x_tcr).squeeze(-1)
+                preds = (yhat > 0.5).cpu().numpy()  # Threshold for binding
+
+                # Write predictions
+                for idx, pred in enumerate(preds):
+                    writer.writerow([batch_idx * len(preds) + idx, "Binds" if pred else "Does Not Bind"])
+
+    print(f"Blind test predictions saved to {output_file}")
+
+
 def save_predictions(model, device, test_loader, output_file):
     """
     Save predictions to a CSV file.
@@ -70,6 +97,7 @@ def main():
     parser.add_argument('--drop_rate', type=float, default=0.25, help='Dropout rate for dense layers')
     parser.add_argument('--lin_size', type=int, default=1024, help='Size of the linear transformation layers')
     parser.add_argument('--heads', type=int, default=8, help='Number of attention heads for MultiheadAttention')
+    parser.add_argument('--blindfile', type=str, default=None, help='Input file for blind test (PKL format)')
     args = parser.parse_args()
 
     # Set device
@@ -150,8 +178,26 @@ def main():
         predictions_file = f'./result/pred_{os.path.splitext(args.model_name)[0]}.csv'
         save_predictions(model, device, test_loader, predictions_file)
 
+    # Blind testing mode
+    elif args.mode == 'blindtest':
+        assert args.blindfile is not None, "Blind test mode requires --blindfile"
+        model_name = f'./models/{args.model_name}'
+        assert os.path.exists(model_name), f"Model file {model_name} not found!"
+        
+        from attention import Net
+        model = Net(args).to(device)
+        model.load_state_dict(torch.load(model_name, map_location=device))
+        print(f"Loaded model from {model_name}")
+        
+        x_pep, x_tcr = load_precomputed_embeddings_blind(args.blindfile)
+        test_loader = define_dataloader(x_pep, x_tcr, None, batch_size=args.batch_size, device=device, shuffled=False)
+        
+        print("Performing blind test on data")
+
+        blindtest(model, device, test_loader['loader'], output_file=f'./result/blindtest_{os.path.splitext(args.model_name)[0]}.csv')        
+        
     else:
-        raise ValueError('Invalid mode. Use --mode train or --mode test.')
+        raise ValueError('Invalid mode. Use --mode train or --mode test or --mode blindtest.')
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,10 @@
+Metric,Value
+accuracy,0.8561
+precision1,0.9535
+precision0,0.7934
+recall1,0.748
+recall0,0.9637
+f1macro,0.8543
+f1micro,0.8561
+auc,0.954
+loss,34807.2945

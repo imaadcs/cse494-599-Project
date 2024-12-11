@@ -22,10 +22,16 @@ AMINO_MAP_REV = ['A','R','N','D','C','Q','E','G','H','I','L','K',
 AMINO_MAP_REV_ = ['A','R','N','D','C','Q','E','G','H','I','L','K',
                  'M','F','P','S','T','W','Y','V','N','Q','*','*','@']
 
-def define_dataloader(X_pep, X_tcr, y=None, batch_size=50, device='cuda'):
+def define_dataloader(X_pep, X_tcr, y=None, batch_size=50, device='cuda', shuffled=True):
     device_id = 0 if device == 'cuda' else -1
-    dataset = torch.utils.data.TensorDataset(X_pep, X_tcr, y)
-    loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    
+    if y:
+        assert y is not None
+        dataset = torch.utils.data.TensorDataset(X_pep, X_tcr, y)
+    else:
+        dataset = torch.utils.data.TensorDataset(X_pep, X_tcr)
+    
+    loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffled)
     return {'loader': loader}
 
 def tokenizer(sequence):
@@ -477,4 +483,22 @@ def load_precomputed_embeddings(filepath):
         torch.tensor(data["epi_embeds"].tolist(), dtype=torch.float32),
         torch.tensor(data["tcr_embeds"].tolist(), dtype=torch.float32),
         torch.tensor(data["binding"].tolist(), dtype=torch.float32),
+    )
+
+
+def load_precomputed_embeddings_blind(filepath):
+    """Load precomputed embeddings from a .pkl file."""
+    
+    try:
+        data = pd.read_pickle(filepath)
+    except Exception as e:
+        print(f"Failed with exception: {e}")
+        with open(filepath, "rb") as f:
+            data = pickle.load(f)
+
+    print(f"Serialized pickle file located at {filepath} has been read and is approximately {os.path.getsize(filepath) / 1e9:.2f} GB")
+    
+    return (
+        torch.tensor(data["epi_embeds"].tolist(), dtype=torch.float32),
+        torch.tensor(data["tcr_embeds"].tolist(), dtype=torch.float32),
     )
