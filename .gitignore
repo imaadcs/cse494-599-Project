@@ -46,7 +46,7 @@ data/*_data_shuffle.txt
 # Output Files #
 ################
 /result/pred*
-/result/blindtest*
+#/result/blindtest*
 #/result
 /models
 /autoencoder

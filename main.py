@@ -58,7 +58,7 @@ def blindtest(model, device, test_loader, output_file):
     # Open file for predictions
     with open(output_file, 'w', newline='') as wf:
         writer = csv.writer(wf)
-        writer.writerow(['Index', 'Binding'])
+        writer.writerow(['Index', 'Binding Probability'])
 
         with torch.no_grad():
             for batch_idx, (x_pep, x_tcr) in enumerate(test_loader):
@@ -69,7 +69,7 @@ def blindtest(model, device, test_loader, output_file):
 
                 # Write predictions
                 for idx, prob in enumerate(probs):
-                    writer.writerow([batch_idx * len(probs) + idx, prob])
+                    writer.writerow([batch_idx * len(probs) + idx, f"{prob:.16f}"])
 
     print(f"Blind test predictions saved to {output_file}")
 
