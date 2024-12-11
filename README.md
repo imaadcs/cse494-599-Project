@@ -6,7 +6,7 @@ ATM-TCR demonstrates how a multi-head self-attention based model can be utilized
 
 ## Class Project: Model Variants and Results
 
-For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the release and their raw performance stats can be seen in the `results/` folder.
+For this project, we trained a modified variant of ATM-TCR on **EPI** and **TCR** splits using four different variants of hyperparameters. The trained models can be found in the release and their raw performance stats can be seen in the `results/` folder or in the table below.
 
 The major modification we did here compared to the regular ATM-TCR model was use context-aware embeddings through the catELMO embedding model.
 
