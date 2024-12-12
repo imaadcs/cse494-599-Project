@@ -1,0 +1,7 @@
+-----------------./model/TEPCAM_tcr_2.pt--------------
+ACC,0.576
+AUC,0.631
+AUPR,0.734
+Recall,0.836
+Precision,0.550
+F1,0.663

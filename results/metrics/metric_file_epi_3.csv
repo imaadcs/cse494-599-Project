@@ -1,0 +1,7 @@
+-----------------./model/TEPCAM_epi_3.pt--------------
+ACC,0.550
+AUC,0.575
+AUPR,0.685
+Recall,0.653
+Precision,0.542
+F1,0.593
