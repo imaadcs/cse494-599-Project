@@ -52,7 +52,7 @@ The performance metrics for the models with varying hyperparameters on both the 
 \begin{longtable}{|l|l|c|c|c|c|c|}
 \hline
 \textbf{Split} & \textbf{Model Name} & \textbf{Acc} & \textbf{AUC} & \textbf{Recall} & \textbf{Precision} & \textbf{F1} \\ \hline
-TCR & TCRTest1 & 0.7070 & 0.7798 & 0.6959 & 0.7107 & 0.7032 \\ \hline
+TCR & TCRTest1 & \textbf{0.7070} & 0.7798 & 0.6959 & 0.7107 & 0.7032 \\ \hline
 TCR & TCRTest2 & 0.6757 & 0.8047 & 0.8636 & 0.6270 & 0.7265 \\ \hline
 TCR & TCRTest3 & 0.6133 & 0.7950 & 0.9338 & 0.5684 & 0.7067 \\ \hline
 TCR & TCRTest4 & 0.7267 & 0.8141 & 0.7558 & 0.7134 & 0.7340 \\ \hline
@@ -77,7 +77,7 @@ EPI & EPITest6 & 0.8025 & 0.9318 & 0.6361 & 0.9534 & 0.7631 \\ \hline
 EPI & EPITest7 & 0.8472 & 0.9241 & 0.8394 & 0.8527 & 0.8460 \\ \hline
 TCR & TCRTest1 & 0.8561 & 0.9540 & 0.7480 & 0.9535 & 0.8383 \\ \hline
 TCR & TCRTest2 & 0.8684 & 0.9547 & 0.7883 & 0.9380 & 0.8566 \\ \hline
-TCR & TCRTest3 & 0.8785 & 0.9517 & 0.8328 & 0.9160 & 0.8724 \\ \hline
+TCR & TCRTest3 & \textbf{0.8785} & 0.9517 & 0.8328 & 0.9160 & 0.8724 \\ \hline
 \caption{Modified ATM-TCR Results on TCR and EPI Splits}
 \label{table:atm-tcr}
 \end{longtable}
@@ -113,7 +113,7 @@ EPI & TEPCAM\_epi\_3 & 0.550 & 0.575 & 0.653 & 0.542 & 0.593 \\ \hline
 \end{longtable}
 
 \section{Best-Performing Hyperparameters}
-The best-performing hyperparameters for each split and model are summarized below:
+The best-performing hyperparameters for each model are summarized below:
 \begin{itemize}
     \item \textbf{TCR Split (ATM-TCR):} Epochs = 100, Learning Rate = 5e-5, Dropout = 0.25, Batch Size = 32, with an accuracy of 72.67\%
     \item \textbf{TCR Split (ATM-TCR Modified):} Epochs = 175, Learning Rate = 5e-5, Drop Rate = 0.2, Batch Size = 32, with an accuracy of 87.85\%
