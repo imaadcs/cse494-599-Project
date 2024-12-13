@@ -25,8 +25,7 @@ AMINO_MAP_REV_ = ['A','R','N','D','C','Q','E','G','H','I','L','K',
 def define_dataloader(X_pep, X_tcr, y=None, batch_size=50, device='cuda', shuffled=True):
     device_id = 0 if device == 'cuda' else -1
     
-    if y:
-        assert y is not None
+    if y is not None:
         dataset = torch.utils.data.TensorDataset(X_pep, X_tcr, y)
     else:
         dataset = torch.utils.data.TensorDataset(X_pep, X_tcr)
