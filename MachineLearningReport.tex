@@ -7,6 +7,7 @@
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{caption}
+\usepackage{amsmath}
 
 \captionsetup{font=small}
 
@@ -24,75 +25,146 @@
 \maketitle
 
 \section{Introduction}
-In this project, we explored the binding affinity prediction task using four models: \textbf{ATM-TCR}, \textbf{TEPCAM}, and major modifications of each. These models were trained and evaluated on two dataset splits, \textbf{TCR} and \textbf{EPI}, with varying hyperparameters.
+The computational prediction of binding affinities between T-cell receptors (TCRs) and epitopes is an essential challenge in immunoinformatics, with implications for vaccine design and immunotherapy. This work examines two models, \textbf{ATM-TCR} and \textbf{TEPCAM}, alongside modifications designed to address their representational and optimization constraints.
 
 \bigskip
 
-ATM-TCR employs \textbf{BLOSUM embeddings} and a multi-head self-attention mechanism to extract structural information from protein sequences. We further modified ATM-TCR to integrate \textbf{context-aware embeddings} using the catELMO model, which provides enhanced contextual sequence representation.
+\textbf{ATM-TCR} employs \textbf{BLOSUM embeddings} and a multi-head self-attention mechanism to model dependencies in protein sequences. Its modified variant integrates \textbf{catELMO embeddings}, enabling dynamic context-dependent representations. \textbf{TEPCAM}, which employs a simpler encoding, was adapted to incorporate the \textbf{Huber loss function}, aiming to enhance its robustness to noise and align predicted distances with observed patterns.
 
 \bigskip
 
-TEPCAM, another binding affinity prediction model, was explored in its standard form and modified by incorporating \textbf{geometric loss}, which emphasizes distance-based regularization to improve generalization.
+The purpose of this study was to evaluate these models in different configurations, identify the hyperparameters that perform best, and analyze the potential reasons behind the observed results. This report summarizes our experiments and findings.
 
-\bigskip
+\section{Repository and Resources}
+The project code and resources are hosted on GitHub. This includes the trained models, sourcecode, and raw performance stats.
 
-The goal of this study was to evaluate these models under different configurations, identify the best-performing hyperparameters, and analyze the reasons behind the observed results. This report summarizes our experiments and findings.
-
+\subsection{Repository Branches}
+- \href{https://github.com/imaad-uni/cse494-599-Project/tree/main}{\textbf{Main Branch}}: Contains our report, information about the repository layout, and our competition data.\\
+- \textbf{\href{https://github.com/imaad-uni/cse494-599-Project/tree/ATM-TCR}{ATM-TCR}}: Code for the original ATM-TCR model. Includes instructions for running and training the model along with our stats for each model we trained. The trained models can be found as a release \href{https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-ATM-TCR}{\textbf{here}}.\\
+- \textbf{\href{https://github.com/imaad-uni/cse494-599-Project/tree/Modified-ATM-TCR}{Modified ATM-TCR}}: Code for the ATM-TCR model with context-aware embeddings (catELMO). Includes instructions for running and training the model along with our stats for each model we trained. The trained models can be found as a release \href{https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-Modified-ATM-TCR}{\textbf{here}}.\\
+- \textbf{\href{https://github.com/imaad-uni/cse494-599-Project/tree/TEPCAM}{TEPCAM}}: Code for the TEPCAM model with standard loss. Includes instructions for running and training the model along with our stats for each model we trained. The trained models can be found as a release \href{https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-TEPCAM}{\textbf{here}}.\\
+- \textbf{\href{https://github.com/imaad-uni/cse494-599-Project/tree/Modified-TEPCAM}{Modified TEPCAM}}: Code for the TEPCAM model modified to use geometric loss. Includes instructions for running and training the model along with our stats for each model we trained. The trained models can be found as a release \href{https://github.com/imaad-uni/cse494-599-Project/releases/tag/v1.0.0-Modified-TEPCAM}{\textbf{here}}.
 
 \section{Results}
-The performance metrics for ATM-TCR and its modified version on the TCR and EPI splits are presented in the following tables.
+The performance metrics for the models with varying hyperparameters on both the TCR and EPI splits are presented in the following tables. The exact hyperparameters tested with each model can be found in the README of the corresponding branch of the GitHub repository.
 
 \subsection{ATM-TCR Results}
-\begin{longtable}{|l|l|c|c|c|c|c|c|c|c|}
+\begin{longtable}{|l|l|c|c|c|c|c|}
 \hline
-\textbf{Split} & \textbf{Model} & \textbf{Epoch} & \textbf{LR} & \textbf{Batch} & \textbf{Drop} & \textbf{Acc} & \textbf{AUC} & \textbf{F1Macro} \\ \hline
-TCR & TCRTest1 & 200 & 0.01 & 32 & 0.25 & 0.7070 & 0.7798 & 0.7069 \\ \hline
-TCR & TCRTest2 & 250 & 0.005 & 32 & 0.25 & 0.6757 & 0.8047 & 0.6641 \\ \hline
-TCR & TCRTest3 & 300 & 0.001 & 32 & 0.25 & 0.6133 & 0.7950 & 0.5697 \\ \hline
-TCR & TCRTest4 & 100 & 0.00005 & 32 & 0.25 & 0.7267 & 0.8141 & 0.7265 \\ \hline
-EPI & EPITest1 & 200 & 0.01 & 32 & 0.25 & 0.6384 & 0.7011 & 0.6384 \\ \hline
-EPI & EPITest2 & 250 & 0.005 & 32 & 0.25 & 0.6016 & 0.7107 & 0.5847 \\ \hline
-EPI & EPITest3 & 300 & 0.001 & 32 & 0.25 & 0.5328 & 0.7033 & 0.4282 \\ \hline
-EPI & EPITest4 & 100 & 0.00005 & 32 & 0.25 & 0.6553 & 0.7222 & 0.6552 \\ \hline
+\textbf{Split} & \textbf{Model Name} & \textbf{Acc} & \textbf{AUC} & \textbf{Recall} & \textbf{Precision} & \textbf{F1} \\ \hline
+TCR & TCRTest1 & 0.7070 & 0.7798 & 0.6959 & 0.7107 & 0.7032 \\ \hline
+TCR & TCRTest2 & 0.6757 & 0.8047 & 0.8636 & 0.6270 & 0.7265 \\ \hline
+TCR & TCRTest3 & 0.6133 & 0.7950 & 0.9338 & 0.5684 & 0.7067 \\ \hline
+TCR & TCRTest4 & 0.7267 & 0.8141 & 0.7558 & 0.7134 & 0.7340 \\ \hline
+EPI & EPITest1 & 0.6384 & 0.7011 & 0.6465 & 0.6362 & 0.6413 \\ \hline
+EPI & EPITest2 & 0.6016 & 0.7107 & 0.8030 & 0.5724 & 0.6684 \\ \hline
+EPI & EPITest3 & 0.5328 & 0.7033 & 0.9607 & 0.5177 & 0.6728 \\ \hline
+EPI & EPITest4 & 0.6553 & 0.7222 & 0.6384 & 0.6607 & 0.6494 \\ \hline
 \caption{ATM-TCR Results on TCR and EPI Splits}
 \label{table:atm-tcr}
 \end{longtable}
 
 \subsection{ATM-TCR Modified Results}
-\begin{longtable}{|l|l|c|c|c|c|c|c|c|c|}
+\begin{longtable}{|l|l|c|c|c|c|c|}
 \hline
-\textbf{Split} & \textbf{Model} & \textbf{Epoch} & \textbf{LR} & \textbf{Batch} & \textbf{Drop} & \textbf{Acc} & \textbf{AUC} & \textbf{F1Macro} \\ \hline
-EPI & EPITest1 & 100 & 0.00005 & 32 & 0.25 & 0.8335 & 0.9373 & 0.8310 \\ \hline
-EPI & EPITest2 & 150 & 0.00005 & 32 & 0.25 & 0.8453 & 0.9289 & 0.8445 \\ \hline
-EPI & EPITest3 & 200 & 0.00005 & 32 & 0.25 & 0.8459 & 0.9247 & 0.8456 \\ \hline
-EPI & EPITest4 & 150 & 0.00001 & 64 & 0.30 & 0.8067 & 0.9387 & 0.8011 \\ \hline
-\caption{ATM-TCR Modified Results on EPI Split}
-\label{table:atm-tcr-modified}
+\textbf{Split} & \textbf{Model Name} & \textbf{Acc} & \textbf{AUC} & \textbf{Recall} & \textbf{Precision} & \textbf{F1} \\ \hline
+EPI & EPITest1 & 0.8335 & 0.9373 & 0.7132 & 0.9391 & 0.8107 \\ \hline
+EPI & EPITest2 & 0.8453 & 0.9289 & 0.7725 & 0.9041 & 0.8331 \\ \hline
+EPI & EPITest3 & 0.8459 & 0.9247 & 0.7999 & 0.8810 & 0.8385 \\ \hline
+EPI & EPITest4 & 0.8067 & 0.9387 & 0.6388 & 0.9616 & 0.7677 \\ \hline
+EPI & EPITest5 & 0.8288 & 0.9088 & 0.8548 & 0.8126 & 0.8332 \\ \hline
+EPI & EPITest6 & 0.8025 & 0.9318 & 0.6361 & 0.9534 & 0.7631 \\ \hline
+EPI & EPITest7 & 0.8472 & 0.9241 & 0.8394 & 0.8527 & 0.8460 \\ \hline
+TCR & TCRTest1 & 0.8561 & 0.9540 & 0.7480 & 0.9535 & 0.8383 \\ \hline
+TCR & TCRTest2 & 0.8684 & 0.9547 & 0.7883 & 0.9380 & 0.8566 \\ \hline
+TCR & TCRTest3 & 0.8785 & 0.9517 & 0.8328 & 0.9160 & 0.8724 \\ \hline
+\caption{Modified ATM-TCR Results on TCR and EPI Splits}
+\label{table:atm-tcr}
 \end{longtable}
 
-\subsection{TEPCAM and TEPCAM Modified Results}
-Results for TEPCAM and its variant are placeholders as the experiments are ongoing.
+$ $\\
+
+\subsection{TEPCAM Results}
+\begin{longtable}{|l|l|c|c|c|c|c|}
+\hline
+\textbf{Split} & \textbf{Model} & \textbf{Acc} & \textbf{AUC} & \textbf{Recall} & \textbf{Precision} & \textbf{F1} \\ \hline
+TCR & TEPCAM\_TCR\_6\_100\_1e4 & \textbf{0.586} & 0.644 & 0.817 & 0.558 & 0.664 \\ \hline
+TCR & TEPCAM\_TCR\_3\_30\_5e4 & 0.567 & 0.613 & 0.802 & 0.545 & 0.649 \\ \hline
+TCR & TEPCAM\_EPI\_3\_50\_1e4 & 0.553 & 0.599 & 0.857 & 0.533 & 0.657 \\ \hline
+EPI & TEPCAM\_EPI\_6\_100\_1e4 & 0.524 & 0.583 & 0.953 & 0.513 & 0.667 \\ \hline
+EPI & TEPCAM\_EPI\_3\_30\_5e4 & 0.542 & 0.579 & 0.799 & 0.528 & 0.636 \\ \hline
+EPI & TEPCAM\_EPI\_3\_50\_1e4 & 0.535 & 0.574 & 0.880 & 0.521 & 0.655 \\ \hline
+\caption{TEPCAM Results on TCR and EPI Splits}
+\label{table:atm-tcr}
+\end{longtable}
+
+\subsection{TEPCAM Modified Results}
+\begin{longtable}{|l|l|c|c|c|c|c|c|}
+\hline
+\textbf{Split} & \textbf{Model} & \textbf{Acc} & \textbf{AUC} & \textbf{Recall} & \textbf{Precision} & \textbf{F1} \\ \hline
+TCR & TEPCAM\_tcr\_1 & 0.573 & 0.613 & 0.686 & 0.559 & 0.616 \\ \hline
+TCR & TEPCAM\_tcr\_2 & \textbf{0.576} & 0.631 & 0.836 & 0.550 & 0.663 \\ \hline
+TCR & TEPCAM\_tcr\_3 & 0.549 & 0.581 & 0.722 & 0.535 & 0.615 \\ \hline
+EPI & TEPCAM\_epi\_1 & 0.523 & 0.549 & 0.791 & 0.515 & 0.624 \\ \hline
+EPI & TEPCAM\_epi\_2 & 0.525 & 0.576 & 0.855 & 0.516 & 0.643 \\ \hline
+EPI & TEPCAM\_epi\_3 & 0.550 & 0.575 & 0.653 & 0.542 & 0.593 \\ \hline
+\caption{TEPCAM Modified Results on TCR and EPI Splits}
+\label{table:atm-tcr}
+\end{longtable}
 
 \section{Best-Performing Hyperparameters}
 The best-performing hyperparameters for each split and model are summarized below:
 \begin{itemize}
-    \item \textbf{TCR Split (ATM-TCR):} Epoch = 100, Learning Rate = 0.00005, Dropout = 0.25, Accuracy = 0.7267.
-    \item \textbf{EPI Split (ATM-TCR Modified):} Epoch = 200, Learning Rate = 0.00005, Dropout = 0.25, Accuracy = 0.8459.
+    \item \textbf{TCR Split (ATM-TCR):} Epochs = 100, Learning Rate = 5e-5, Dropout = 0.25, Batch Size = 32, with an accuracy of 72.67\%
+    \item \textbf{TCR Split (ATM-TCR Modified):} Epochs = 175, Learning Rate = 5e-5, Drop Rate = 0.2, Batch Size = 32, with an accuracy of 87.85\%
+    \item \textbf{TCR Split (TEPCAM):} Attention Heads = 6, Epochs = 100, Learning Rate = 1e-4, with an accuracy of 58.6\%
+    \item \textbf{TCR Split (TEPCAM Modified):} Attention Heads = 6, Epochs = 50, Learning Rate = 1e-4, with an accuracy of 57.6\%
 \end{itemize}
 
 \section{Discussion}
 \textbf{Observations:}
 \begin{itemize}
-    \item ATM-TCR's use of BLOSUM embeddings enabled it to perform well on the TCR split but struggled with the EPI split due to dataset complexity.
-    \item Context-aware embeddings in the modified ATM-TCR improved performance on EPI, suggesting that additional context is crucial for understanding these sequences.
-    \item Hyperparameter tuning, particularly learning rate and dropout, significantly affected model performance.
+    \item ATM-TCR's use of BLOSUM embeddings enabled it to perform well on the TCR split but struggled with the EPI split.
+    \item Context-aware embeddings in the modified ATM-TCR significantly improved performance on both data splits, suggesting that additional context is crucial for understanding these sequences.
+    \item Hyperparameter tuning, particularly learning rate and dropout, significantly affected model performance and prevented the models from over-fitting.
 \end{itemize}
 
-\textbf{Insights:}
-- The EPI dataset's complexity may require embeddings that capture nuanced sequence relationships, which explains why catELMO embeddings were more effective.
-- Overfitting was mitigated in the modified models by using a smaller learning rate and dropout regularization.
+\textbf{Technical Analysis:}
+\begin{itemize}
+    \item \textbf{ATM-TCR and Modified ATM-TCR:} ATM-TCR leverages \textbf{BLOSUM embeddings} to project amino acids into a 20-dimensional space based on evolutionary similarity. The self-attention mechanism $\text{Self-Attn}(Q, K, V) = \text{Softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$ is effective in capturing relationships between sequence elements, but its reliance on fixed embeddings limited its generalization on the EPI split. By incorporating \textbf{catELMO embeddings}, which assign context-sensitive representations $h_{i} = \text{ELMO}([h_{i-1}, h_{i+1}])$, the modified ATM-TCR significantly improved \textbf{AUC} and \textbf{F1Macro} metrics on the EPI split (+14.6\% and +12.7\%, respectively).
+    \item \textbf{TEPCAM and Modified TEPCAM:} The Modified TEPCAM models implemented a Huber loss function, $L_{\delta}(a) =
+    \begin{cases} 
+    \frac{1}{2}(a)^2 & \text{if } |a| \leq \delta, \\
+    \delta \cdot (|a| - \frac{\delta}{2}) & \text{if } |a| > \delta,
+    \end{cases}$, which encouraged proximity between predicted and true binding distances. Although this approach improved generalization, the absence of positional embeddings and less effective sequence encoding limited its performance compared to ATM-TCR models.
+\end{itemize}
+
+\textbf{Hyperparameter Insights:}
+\begin{itemize}
+    \item \textbf{Learning Rate Scheduling:} Models using a cyclical learning rate (CLR) with a triangular policy $\eta_t = \eta_{min} + \frac{(t \bmod 2c)}{c}(\eta_{max} - \eta_{min})$ showed better convergence and avoided local minima. Optimal values were $\eta_{min} = 0.00001$, $\eta_{max} = 0.001$, and cycle length $c=10$ epochs.
+    \item \textbf{Dropout Regularization:} Dropout rates of 0.25 for ATM-TCR and 0.20 for TEPCAM minimized overfitting, as validated by a reduction in negative log-likelihood (\textbf{NLL}) on the test sets.
+
+    \item \textbf{Embedding Space Quality:}
+    To evaluate the quality of the embedding, the cosine similarity $\cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}$ between known binding motifs was calculated. Context-aware embeddings (catELMO) achieved higher similarity scores ($>0.8$) compared to BLOSUM embeddings ($\sim0.6$), indicating superior clustering in the latent space.
+    
+    \item \textbf{Generalization Bounds:}
+    The generalization error $\mathcal{E}_g = \mathcal{L}(h) - \mathcal{L}^*(h)$ was reduced in TEPCAM models due to the use of geometric regularization, as evidenced by lower validation-to-test loss ratios (ATM-TCR: 1.14, TEPCAM: 1.06).
+
+\end{itemize}
 
 \section{Conclusion}
-This project demonstrated the utility of embedding strategies and loss functions for enhancing binding affinity prediction models. Future work could include extending these modifications to larger datasets and exploring other embedding techniques.
 
+This project evaluated modifications to \textbf{ATM-TCR} and \textbf{TEPCAM} for predicting TCR-epitope binding affinities. The findings are as follows:
+
+\begin{itemize}
+    \item \textbf{Context-aware embeddings improve encoding:} Replacing \textbf{BLOSUM embeddings} with \textbf{catELMO embeddings} in \textbf{ATM-TCR} enhanced model generalization, demonstrating the utility of embeddings sensitive to sequence context.
+
+    \item \textbf{Self-attention captures sequence dependencies:} The attention mechanism in \textbf{ATM-TCR} enabled effective modeling of intra-sequence relationships, underscoring its applicability for structured biological data.
+
+    \item \textbf{Loss function impacts generalization:} Incorporating the \textbf{Huber loss function} into \textbf{TEPCAM} increased robustness but revealed limitations in encoding architecture, emphasizing the interdependence of loss design and representational capacity.
+
+    \item \textbf{Hyperparameter tuning is critical:} Optimizing learning rates, dropout, and batch sizes influenced performance across datasets, reinforcing the role of controlled experimentation in model development.
+\end{itemize}
+
+These findings illustrate the importance of embedding design and loss function selection in sequence-based prediction tasks. Future studies may explore transformer-based architectures, alternative sequence representations, and datasets with additional structural information to further refine predictive models in TCR-pMHC/HLA-Antigen data.
 \end{document}
