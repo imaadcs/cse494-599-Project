@@ -33,8 +33,15 @@ Below is a summary of the performance metrics and hyperparameters for each model
 `mamba create --name atm_tcr python=3.8.10`  
 `cd /path/to/repo`  
 `pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html`  
-`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/csv --indepfile /path/to/test/csv --save_model True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --early_stop=False --lr=0.001 --batch_size=32 --drop_rate=0.25`  
+`CUDA_VISIBLE_DEVICES=0 python main.py --infile /path/to/train/csv --indepfile /path/to/test/csv --save_model True --model_name MODELNAME --mode=CHANGE_TO_TRAIN_OR_TEST_OR_BLINDTEST --epoch=100 --early_stop=False --lr=0.001 --batch_size=32 --drop_rate=0.25`
 
+## Citation
+
+**Context-Aware Amino Acid Embedding Advances Analysis of TCR-Epitope Interactions**  
+Pengfei Zhang, Seojin Bang, Michael Cai, Heewook Lee  
+*bioRxiv*  
+DOI: [10.1101/2023.04.12.536635](https://doi.org/10.1101/2023.04.12.536635)  
+Published by Cold Spring Harbor Laboratory.
 
 ## Publication
 <b>ATM-TCR: TCR-Epitope Binding Affinity Prediction Using a Multi-Head Self-Attention Model</b> <br/>
